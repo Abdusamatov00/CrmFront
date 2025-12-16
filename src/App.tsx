@@ -1,4 +1,5 @@
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import Sidebar from "./components/shared/sidebar";
 
 const App = () => {
   return (
@@ -9,8 +10,9 @@ const App = () => {
         <Route
           path="/admin"
           element={
-            <div>
-              Navbar <Outlet />
+            <div className="w-full flex">
+              <Sidebar />
+              <Outlet />
             </div>
           }
         >
