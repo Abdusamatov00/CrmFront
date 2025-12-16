@@ -1,10 +1,11 @@
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import LoginPage from "./feature/login/login";
 
 const App = () => {
   return (
     <div>
       <Routes>
-        <Route path="/login" element="login" />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/*" element={<Navigate to={"/login"} />} />
         <Route
           path="/admin"
