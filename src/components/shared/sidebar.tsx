@@ -1,7 +1,14 @@
 import { AdminNavLinks } from "@/constants";
 import { Link } from "react-router-dom";
 import pnj from "../../assets/logo.png";
+import { User } from "lucide-react";
+
 const Sidebar = () => {
+  const user = {
+    name: "Dilshod Isoqov",
+    role: "Administrator",
+  };
+
   return (
     <div className="bg-blue-600 max-w-[320px] min-h-screen md:relative fixed w-full">
       <header className="p-3 text-white space-y-6">
@@ -13,7 +20,6 @@ const Sidebar = () => {
         <nav className="flex flex-col gap-1">
           {AdminNavLinks.map((item) => {
             const Icon = item.icon;
-
             return (
               <Link
                 key={item.title}
@@ -28,8 +34,15 @@ const Sidebar = () => {
           })}
         </nav>
 
-        <div className="w-full border-t absolute bottom-0 h-14 ml-[-10px] border-white/20 pt-3 text-sm">
-          user details
+        {/* User Details */}
+        <div className="w-full border-t absolute bottom-0 h-20 ml-[-10px] border-white/20 flex items-center px-3 gap-3">
+          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+            <User size={20} className="text-white" />
+          </div>
+          <div className="flex flex-col text-white text-sm">
+            <span className="font-semibold">{user.name}</span>
+            <span className="text-white/70">{user.role}</span>
+          </div>
         </div>
       </header>
     </div>
