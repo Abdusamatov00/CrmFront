@@ -5,8 +5,8 @@ import { User } from "lucide-react";
 
 const Sidebar = () => {
   const user = {
-    name: "Dilshod Isoqov",
-    role: "Administrator",
+    name: "Dilshod Abdusamatov",
+    role: "Admin",
   };
 
   return (
@@ -22,7 +22,7 @@ const Sidebar = () => {
             const Icon = item.icon;
             return (
               <Link
-                key={item.title}
+                key={item.title}  
                 to={item.route}
                 className="flex items-center h-12 gap-2 m-[10px] px-3 py-2 rounded-md
                            hover:bg-black/15 transition"
@@ -34,7 +34,6 @@ const Sidebar = () => {
           })}
         </nav>
 
-        {/* User Details */}
         <div className="w-full border-t absolute bottom-0 h-20 ml-[-10px] border-white/20 flex items-center px-3 gap-3">
           <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
             <User size={20} className="text-white" />
