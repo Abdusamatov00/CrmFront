@@ -48,12 +48,10 @@ export default function FinanceGrowthChart() {
   const profit = income.map((v, i) => v - expense[i]);
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm">
+    <div className="bg-white p-6 rounded-2xl shadow-sm w-full">
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-lg font-semibold">
-          Moliyaviy o‘sish dinamikasi
-        </h2>
+        <h2 className="text-lg font-semibold">Moliyaviy o‘sish dinamikasi</h2>
 
         <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
           {(["weekly", "monthly", "yearly"] as Period[]).map((p) => (
@@ -74,8 +72,9 @@ export default function FinanceGrowthChart() {
       </div>
 
       {/* CHART */}
-      <div className="h-[340px]">
+      <div className="w-full flex-1 h-[260px] sm:h-[320px] lg:h-[360px]">
         <Line
+          className="w-full h-full"
           data={{
             labels,
             datasets: [

@@ -1,24 +1,20 @@
-import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./feature/login/login";
-import Sidebar from "./components/shared/sidebar";
+import MoliyaviyDashboard from "./components/finance/finances";
+import Admin from "./components/layout/admin";
 
 const App = () => {
   return (
     <div>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/*" element={<Navigate to={"/login"} />} />
-        <Route
-          path="/admin"
-          element={
-            <div className="w-full flex">
-              <Sidebar />
-              <Outlet />
-            </div>
-          }
-        >
-          <Route path="home" element="home" />
+
+        <Route path="/admin" element={<Admin />}>
+          <Route index element={<MoliyaviyDashboard />} />
+          <Route path="home" element={<MoliyaviyDashboard />} />
         </Route>
+
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </div>
   );

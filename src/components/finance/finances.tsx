@@ -1,21 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
-import {
-  Wallet,
-  CreditCard,
-  DollarSign,
-  TrendingUp,
-} from 'lucide-react';
+import React from "react";
+import { Wallet, CreditCard, DollarSign, TrendingUp } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -23,22 +13,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import {
-  Avatar,
-  AvatarFallback,
-} from '@/components/ui/avatar';
+} from "@/components/ui/table";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-import {
-  PieChart as RePieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
-
-import FinanceGrowthChart from './FinanceGrowthChart';
+import FinanceGrowthChart from "./FinanceGrowthChart";
 
 const dashboardData = {
   summary: {
@@ -51,46 +29,70 @@ const dashboardData = {
   },
 
   expenseBreakdown: [
-    { name: 'Ish haqi',  color: '#3b82f6' },
-    { name: 'Ofis',  color: '#10b981' },
-    { name: 'Marketing', color: '#f59e0b' },
-    { name: 'Boshqa',  color: '#ef4444' },
+    { name: "Ish haqi", color: "#3b82f6" },
+    { name: "Ofis", color: "#10b981" },
+    { name: "Marketing", color: "#f59e0b" },
+    { name: "Boshqa", color: "#ef4444" },
   ],
 
   debtors: [
-    { id: 1, name: 'Anvar Karimov', amount: 2_500_000, dueDate: '05.07.2024', status: 'overdue' },
-    { id: 2, name: 'Sofia Solutions', amount: 3_800_000, dueDate: '28.06.2024', status: 'pending' },
-    { id: 3, name: 'Rahim Timur', amount: 1_600_000, dueDate: '20.06.2024', status: 'overdue' },
-    { id: 4, name: 'Zmax Group', amount: 4_200_000, dueDate: '15.06.2024', status: 'soon' },
+    {
+      id: 1,
+      name: "Anvar Karimov",
+      amount: 2_500_000,
+      dueDate: "05.07.2024",
+      status: "overdue",
+    },
+    {
+      id: 2,
+      name: "Sofia Solutions",
+      amount: 3_800_000,
+      dueDate: "28.06.2024",
+      status: "pending",
+    },
+    {
+      id: 3,
+      name: "Rahim Timur",
+      amount: 1_600_000,
+      dueDate: "20.06.2024",
+      status: "overdue",
+    },
+    {
+      id: 4,
+      name: "Zmax Group",
+      amount: 4_200_000,
+      dueDate: "15.06.2024",
+      status: "soon",
+    },
   ],
 };
 
 const formatCurrency = (amount: number) =>
-  new Intl.NumberFormat('uz-UZ', {
-    style: 'currency',
-    currency: 'UZS',
+  new Intl.NumberFormat("uz-UZ", {
+    style: "currency",
+    currency: "UZS",
     maximumFractionDigits: 0,
   }).format(amount);
 
-const getStatusText = (status: 'overdue' | 'pending' | 'soon') => {
+const getStatusText = (status: "overdue" | "pending" | "soon") => {
   switch (status) {
-    case 'overdue':
-      return 'Muddati o‘tgan';
-    case 'pending':
-      return 'Kutilmoqda';
+    case "overdue":
+      return "Muddati o‘tgan";
+    case "pending":
+      return "Kutilmoqda";
     default:
-      return 'Yaqinlarda';
+      return "Yaqinlarda";
   }
 };
 
-const getStatusVariant = (status: 'overdue' | 'pending' | 'soon') => {
+const getStatusVariant = (status: "overdue" | "pending" | "soon") => {
   switch (status) {
-    case 'overdue':
-      return 'destructive';
-    case 'pending':
-      return 'secondary';
+    case "overdue":
+      return "destructive";
+    case "pending":
+      return "secondary";
     default:
-      return 'default';
+      return "default";
   }
 };
 
@@ -109,7 +111,9 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
   icon: Icon,
   gradient,
 }) => (
-  <Card className={`bg-gradient-to-br ${gradient} border-0 shadow-lg text-white`}>
+  <Card
+    className={`bg-gradient-to-br ${gradient} border-0 shadow-lg text-white`}
+  >
     <CardContent className="p-6 flex justify-between items-center">
       <div>
         <p className="text-sm opacity-80">{title}</p>
@@ -131,14 +135,16 @@ const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
   </div>
 );
 
- function MoliyaviyDashboard() {
-  const { summary, expenseBreakdown, debtors } = dashboardData;
+function MoliyaviyDashboard() {
+  const { summary, debtors } = dashboardData;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="overflow-auto  bg-gray-50 p-6">
+      <div className="max-w-9xl mx-auto space-y-8">
         {/* Sarlavha */}
-        <h1 className="text-4xl font-bold text-gray-900">Moliyaviy Dashboard</h1>
+        <h1 className="text-4xl font-bold text-gray-900">
+          Moliyaviy Dashboard
+        </h1>
 
         {/* Umumiy kartalar */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -198,43 +204,6 @@ const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
               </CardContent>
             </Card>
           </div>
-
-          {/* Xarajatlar taqsimoti - Donut chart + legend */}
-          <Card className="h-full">
-            <CardHeader>
-              <CardTitle>Xarajatlar taqsimoti</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <RePieChart>
-                  <Pie
-                    data={expenseBreakdown}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={2}
-                  >
-                    {expenseBreakdown.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    formatter={(value: number) => `${value}%`}
-                    contentStyle={{ backgroundColor: '#fff', borderRadius: '8px' }}
-                  />
-                  <Legend
-                    verticalAlign="bottom"
-                    align="center"
-                    layout="horizontal"
-                    iconType="circle"
-                  />
-                </RePieChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
         </div>
 
         {/* Qarzdorlar jadvali */}
@@ -259,9 +228,9 @@ const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
                       <Avatar>
                         <AvatarFallback>
                           {debtor.name
-                            .split(' ')
+                            .split(" ")
                             .map((n) => n[0].toUpperCase())
-                            .join('')}
+                            .join("")}
                         </AvatarFallback>
                       </Avatar>
                       {debtor.name}
