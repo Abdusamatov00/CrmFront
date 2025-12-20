@@ -74,8 +74,8 @@ export default function FinanceGrowthChart() {
       </div>
 
       {/* CHART */}
-      <div className="h-[340px]">
-        <Line
+      <div className="flex flex-col w-full h-80 sm:h-96">
+  <Line 
           data={{
             labels,
             datasets: [

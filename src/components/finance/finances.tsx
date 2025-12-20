@@ -14,8 +14,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+
 import {
   Table,
   TableBody,
@@ -24,6 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+
 import {
   Avatar,
   AvatarFallback,
@@ -40,6 +43,9 @@ import {
 
 import FinanceGrowthChart from './FinanceGrowthChart';
 
+
+// --------------------- DATA -----------------------
+
 const dashboardData = {
   summary: {
     totalIncome: 32_506_254,
@@ -51,10 +57,10 @@ const dashboardData = {
   },
 
   expenseBreakdown: [
-    { name: 'Ish haqi',  color: '#3b82f6' },
-    { name: 'Ofis',  color: '#10b981' },
-    { name: 'Marketing', color: '#f59e0b' },
-    { name: 'Boshqa',  color: '#ef4444' },
+    { name: 'Ish haqi', value: 35, color: '#3b82f6' },
+    { name: 'Ofis', value: 25, color: '#10b981' },
+    { name: 'Marketing', value: 20, color: '#f59e0b' },
+    { name: 'Boshqa', value: 20, color: '#ef4444' },
   ],
 
   debtors: [
@@ -65,6 +71,9 @@ const dashboardData = {
   ],
 };
 
+
+// --------------------- HELPERS -----------------------
+
 const formatCurrency = (amount: number) =>
   new Intl.NumberFormat('uz-UZ', {
     style: 'currency',
@@ -72,27 +81,22 @@ const formatCurrency = (amount: number) =>
     maximumFractionDigits: 0,
   }).format(amount);
 
-const getStatusText = (status: 'overdue' | 'pending' | 'soon') => {
-  switch (status) {
-    case 'overdue':
-      return 'Muddati o‘tgan';
-    case 'pending':
-      return 'Kutilmoqda';
-    default:
-      return 'Yaqinlarda';
-  }
-};
+const getStatusText = (status: string) =>
+  status === 'overdue'
+    ? 'Muddati o‘tgan'
+    : status === 'pending'
+    ? 'Kutilmoqda'
+    : 'Yaqinlarda';
 
-const getStatusVariant = (status: 'overdue' | 'pending' | 'soon') => {
-  switch (status) {
-    case 'overdue':
-      return 'destructive';
-    case 'pending':
-      return 'secondary';
-    default:
-      return 'default';
-  }
-};
+const getStatusVariant = (status: string) =>
+  status === 'overdue'
+    ? 'destructive'
+    : status === 'pending'
+    ? 'secondary'
+    : 'default';
+
+
+// --------------------- SUMMARY CARD -----------------------
 
 type SummaryCardProps = {
   title: string;
@@ -119,10 +123,14 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
           {trend}
         </p>
       </div>
+
       <Icon className="w-12 h-12 opacity-60" />
     </CardContent>
   </Card>
 );
+
+
+// --------------------- MONTHLY ROW -----------------------
 
 const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
   <div className="flex justify-between">
@@ -131,17 +139,25 @@ const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
   </div>
 );
 
- function MoliyaviyDashboard() {
+
+// --------------------- MAIN COMPONENT -----------------------
+
+export default function MoliyaviyDashboard() {
   const { summary, expenseBreakdown, debtors } = dashboardData;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Sarlavha */}
-        <h1 className="text-4xl font-bold text-gray-900">Moliyaviy Dashboard</h1>
+    <div className="min-h-screen bg-gray-50 px-6 py-10">
+      <div className="max-w-7xl mx-auto space-y-10">
 
-        {/* Umumiy kartalar */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* TITLE */}
+        <h1 className="text-4xl font-bold text-gray-900">
+          Moliyaviy Dashboard
+        </h1>
+
+
+        {/* TOP SUMMARY CARDS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
           <SummaryCard
             title="Umumiy Daromad"
             amount={summary.totalIncome}
@@ -166,82 +182,53 @@ const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
             gradient="from-amber-500 to-orange-600"
           />
 
-          {/* Oylik ko'rinish */}
+          {/* MONTH STAT */}
           <Card className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-lg">
             <CardHeader>
               <CardTitle>Oylik Ko‘rinish</CardTitle>
             </CardHeader>
+
             <CardContent className="space-y-4">
               <Row label="Daromad" value={summary.monthlyRevenue} />
               <Row label="Xarajat" value={summary.monthlyExpenses} />
+
               <div className="border-t border-white/30 pt-4 flex justify-between text-lg font-bold">
                 <span>Sof foyda</span>
                 <span>{formatCurrency(summary.netProfit)}</span>
               </div>
+
               <Button className="w-full bg-white text-blue-700 hover:bg-gray-100">
                 Hisobotni ko‘rish
               </Button>
             </CardContent>
           </Card>
+
         </div>
 
-        {/* Grafiklar qismi */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* O'sish grafik */}
-          <div className="lg:col-span-2">
-            <Card className="h-full">
-              <CardHeader>
-                <CardTitle>Daromad va xarajatlar dinamikasi</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <FinanceGrowthChart />
-              </CardContent>
-            </Card>
-          </div>
 
-          {/* Xarajatlar taqsimoti - Donut chart + legend */}
-          <Card className="h-full">
-            <CardHeader>
-              <CardTitle>Xarajatlar taqsimoti</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <RePieChart>
-                  <Pie
-                    data={expenseBreakdown}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={2}
-                  >
-                    {expenseBreakdown.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    formatter={(value: number) => `${value}%`}
-                    contentStyle={{ backgroundColor: '#fff', borderRadius: '8px' }}
-                  />
-                  <Legend
-                    verticalAlign="bottom"
-                    align="center"
-                    layout="horizontal"
-                    iconType="circle"
-                  />
-                </RePieChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
+        {/* CHART AREA */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+          {/* LINE CHART LEFT */}
+          <Card className="xl:col-span-2 w-full">
+  <CardHeader>
+    <CardTitle>Daromad va xarajatlar dinamikasi</CardTitle>
+  </CardHeader>
+  <CardContent className="p-4">
+    <FinanceGrowthChart />
+  </CardContent>
+</Card>
+
+
         </div>
 
-        {/* Qarzdorlar jadvali */}
+
+        {/* FOOTER TABLE */}
         <Card>
           <CardHeader>
             <CardTitle>Qarzdorlar ro‘yxati</CardTitle>
           </CardHeader>
+
           <CardContent>
             <Table>
               <TableHeader>
@@ -252,27 +239,33 @@ const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
                   <TableHead>Holat</TableHead>
                 </TableRow>
               </TableHeader>
+
               <TableBody>
-                {debtors.map((debtor) => (
-                  <TableRow key={debtor.id}>
+                {debtors.map((d) => (
+                  <TableRow key={d.id}>
                     <TableCell className="flex items-center gap-3">
                       <Avatar>
                         <AvatarFallback>
-                          {debtor.name
-                            .split(' ')
-                            .map((n) => n[0].toUpperCase())
-                            .join('')}
+                          {d.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
                         </AvatarFallback>
                       </Avatar>
-                      {debtor.name}
+                      {d.name}
                     </TableCell>
+
                     <TableCell className="font-medium">
-                      {formatCurrency(debtor.amount)}
+                      {formatCurrency(d.amount)}
                     </TableCell>
-                    <TableCell>{debtor.dueDate}</TableCell>
+
                     <TableCell>
-                      <Badge variant={getStatusVariant(debtor.status)}>
-                        {getStatusText(debtor.status)}
+                      {d.dueDate}
+                    </TableCell>
+
+                    <TableCell>
+                      <Badge variant={getStatusVariant(d.status)}>
+                        {getStatusText(d.status)}
                       </Badge>
                     </TableCell>
                   </TableRow>
@@ -281,8 +274,8 @@ const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
             </Table>
           </CardContent>
         </Card>
+
       </div>
     </div>
   );
 }
-export default MoliyaviyDashboard;
