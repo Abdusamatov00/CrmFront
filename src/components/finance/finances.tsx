@@ -16,6 +16,15 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
+import {
+  PieChart as RePieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+
 import FinanceGrowthChart from "./FinanceGrowthChart";
 
 const dashboardData = {
@@ -136,11 +145,11 @@ const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
 );
 
 function MoliyaviyDashboard() {
-  const { summary, debtors } = dashboardData;
+  const { summary, expenseBreakdown, debtors } = dashboardData;
 
   return (
-    <div className="overflow-auto  bg-gray-50 p-6">
-      <div className="max-w-9xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* Sarlavha */}
         <h1 className="text-4xl font-bold text-gray-900">
           Moliyaviy Dashboard
@@ -204,6 +213,46 @@ function MoliyaviyDashboard() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Xarajatlar taqsimoti - Donut chart + legend */}
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle>Xarajatlar taqsimoti</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <RePieChart>
+                  <Pie
+                    data={expenseBreakdown}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={100}
+                    paddingAngle={2}
+                  >
+                    {expenseBreakdown.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(value: number) => `${value}%`}
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Legend
+                    verticalAlign="bottom"
+                    align="center"
+                    layout="horizontal"
+                    iconType="circle"
+                  />
+                </RePieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Qarzdorlar jadvali */}
