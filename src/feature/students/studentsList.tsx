@@ -1,8 +1,8 @@
-// src/components/futured/students/StudentsList.tsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import ToggleStudentStatus from './ToggleStudentStatus'; // ← To‘g‘ri import
+import { api } from '@/service/api';
+import ToggleStudentStatus from './ToggleStudentStatus';
+import { PencilIcon } from 'lucide-react';
 
 interface Student {
   id: string;
@@ -28,9 +28,8 @@ const StudentsList: React.FC = () => {
         ...(filter !== 'all' && { isActive: filter === 'active' ? 'true' : 'false' }),
       });
 
-      const res = await axios.get<{ items: Student[] }>(
-        `http://localhost:3000/api/students?${params.toString()}`
-      );
+      // /api prefiksi YO‘Q → to‘g‘ri yo‘l: /students
+      const res = await api.get<{ items: Student[] }>(`/students?${params.toString()}`);
       setStudents(res.data.items || []);
     } catch (err) {
       console.error('Studentlarni yuklashda xato:', err);
@@ -45,7 +44,6 @@ const StudentsList: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, filter]);
 
-  // O‘chirish/Tiklashdan keyin ro‘yxatni yangilash
   const handleStatusChanged = () => {
     fetchStudents();
   };
@@ -146,15 +144,14 @@ const StudentsList: React.FC = () => {
                     </td>
                     <td className="p-6 text-center">
                       <div className="flex justify-center gap-6 flex-wrap">
-                        {/* Tahrirlash tugmasi */}
-                        <Link
-                          to={`/admin/students/edit/${student.id}`}
-                          className="px-8 py-4 bg-gradient-to-r from-green-600 to-green-700 text-white text-lg font-semibold rounded-xl hover:from-green-700 hover:to-green-800 transition shadow-lg"
-                        >
-                          ✏️ Tahrirlash
-                        </Link>
-
-                        {/* O‘chirish / Tiklash tugmasi */}
+                        {/* Tahrirlash */}
+                  <Link
+                   to={`/admin/students/edit/${student.id}`}
+                    className="px-3 py-4 bg-gradient-to-r from-green-600 to-green-700 text-white text-lg font-semibold rounded-xl hover:from-green-700 hover:to-green-800 transition shadow-lg inline-flex items-center gap-3"
+                   >
+                   <PencilIcon className="h-6 w-6" /> {/* Ikonka o'lchami */}
+                   </Link>
+                        {/* O‘chirish / Tiklash */}
                         <ToggleStudentStatus
                           studentId={student.id}
                           isActive={student.isActive}
