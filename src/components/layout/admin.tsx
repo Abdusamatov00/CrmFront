@@ -9,7 +9,6 @@ const Admin = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Mobile Header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b shadow-sm px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button
@@ -22,11 +21,9 @@ const Admin = () => {
         </div>
       </div>
 
-      {/* Sidebar */}
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-auto pt-[56px] lg:pt-0 lg:ml-64">
+      <div className="flex-1 overflow-auto pt-[56px] ">
         <Outlet />
       </div>
     </div>

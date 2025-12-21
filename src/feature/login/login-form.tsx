@@ -31,7 +31,7 @@ export function LoginForm() {
     <div
       className="
     fixed inset-0 flex items-center justify-center
-    bg-white md:bg-[url('https://www.leadsquared.com/wp-content/uploads/2024/09/role-of-crm-in-marketing.png')]
+    bg-white md:bg-[url('https://media.istockphoto.com/id/1642381198/photo/customer-relationship-management.jpg?s=612x612&w=0&k=20&c=hewouH78IzuySSSq6QawNCBQCMPfaIfEvTYIdhTZYJs=')]
     bg-cover bg-center bg-no-repeat
   "
     >

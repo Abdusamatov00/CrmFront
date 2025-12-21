@@ -71,7 +71,6 @@ export default function FinanceGrowthChart() {
         </div>
       </div>
 
-      {/* CHART */}
       <div className="h-[340px]">
         <Line
           data={{

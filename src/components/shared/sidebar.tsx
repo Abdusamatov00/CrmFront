@@ -18,7 +18,6 @@ const Sidebar = ({ open, onClose }: Props) => {
 
   return (
     <>
-      {/* Mobile Overlay */}
       <div
         onClick={onClose}
         className={`
@@ -29,7 +28,6 @@ const Sidebar = ({ open, onClose }: Props) => {
         `}
       />
 
-      {/* Sidebar */}
       <aside
         className={`
           fixed top-0 left-0 z-50

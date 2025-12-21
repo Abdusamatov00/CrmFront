@@ -1,4 +1,3 @@
-// components/layout/MainLayout.tsx
 import { useState } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Mobile Header with Toggle Button */}
       <header className="lg:hidden sticky top-0 z-30 bg-white border-b shadow-sm px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -30,17 +28,13 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               <span className="font-semibold text-lg">Dashboard</span>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            {/* Add notifications or user menu here */}
-          </div>
+          <div className="flex items-center gap-2"></div>
         </div>
       </header>
 
       <div className="flex">
-        {/* Sidebar */}
         <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        {/* Main Content */}
         <main className="flex-1 lg:ml-64 min-h-screen">
           <div className="p-4 lg:p-6">{children}</div>
         </main>
