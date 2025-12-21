@@ -3,23 +3,26 @@ import {  Route, Routes } from "react-router-dom";
 import LoginPage from "./feature/login/login";
 import MoliyaviyDashboard from "./components/finance/finances";
 import Admin from "./components/layout/admin";
-import StudentsList from "./components/futured/students/studentsList";
-import CreateStudent from "./components/futured/students/createStudents";
+import { Toaster } from "./components/ui/sonner";
+import CreateManager from "./feature/manager/create-manegars";
 
 const App: React.FC = () => {
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
+    <div className="min-h-screen">
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
 
-      <Route path="/admin" element={<Admin />}>
-        <Route index element={<MoliyaviyDashboard />} />
-        <Route path="home" element={<MoliyaviyDashboard />} />
-        <Route path="students" element={<StudentsList/>}/>
-        <Route path="create" element={<CreateStudent />} />
-      </Route>
-      {/* <Route path="/" element={<Navigate to="/admin/home" replace />} />
-      <Route path="*" element={<Navigate to="/login" replace />} /> */}
-    </Routes>
+        <Route path="/admin" element={<Admin />}>
+          <Route index element={<Navigate to="home" replace />} />
+          <Route path="home" element={<MoliyaviyDashboard />} />
+          <Route path="managers" element={<CreateManager />} />
+        </Route>
+        
+
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+      <Toaster />
+    </div>
   );
 };
 

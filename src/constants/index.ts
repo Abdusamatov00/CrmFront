@@ -14,5 +14,5 @@ export const AdminNavLinks = [
   { title: "StudentsList", route: "/admin/students", icon: User },
   { title: "DebtorsList", route: "/admin/debtors", icon: DollarSign },
   { title: "Finance", route: "/admin/finance", icon: Landmark },
-  { title: "Settings", route: "/admin/settings", icon: Settings },
+  { title: "Settings", route: "/admin/managers", icon: Settings },
 ];
