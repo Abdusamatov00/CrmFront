@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
+
 import {
   PieChart as RePieChart,
   Pie,
@@ -26,6 +27,7 @@ import {
 } from "recharts";
 
 import FinanceGrowthChart from "./FinanceGrowthChart";
+import { api } from "@/service/api";
 
 const dashboardData = {
   summary: {
@@ -82,7 +84,9 @@ const formatCurrency = (amount: number) =>
     currency: "UZS",
     maximumFractionDigits: 0,
   }).format(amount);
-
+const getStudent   = async ()=>{
+  const res = await api.get('/students');
+}
 const getStatusText = (status: "overdue" | "pending" | "soon") => {
   switch (status) {
     case "overdue":
@@ -120,33 +124,33 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
   icon: Icon,
   gradient,
 }) => (
-  <Card
-    className={`bg-gradient-to-br ${gradient} border-0 shadow-lg text-white`}
-  >
-    <CardContent className="p-6 flex justify-between items-center">
-      <div>
-        <p className="text-sm opacity-80">{title}</p>
-        <p className="text-3xl font-bold mt-2">{formatCurrency(amount)}</p>
-        <p className="text-sm mt-2 flex items-center gap-1">
-          <TrendingUp className="w-4 h-4" />
-          {trend}
-        </p>
-      </div>
-      <Icon className="w-12 h-12 opacity-60" />
-    </CardContent>
-  </Card>
-);
+ <Card className={`bg-gradient-to-br ${gradient} border-0 shadow-lg text-white`}>
+  <CardContent className="p-6 flex justify-between items-center">
+    <div>
+      <p className="text-sm opacity-80">{title}</p>
+      {/* Amount – responsive text sizes */}
+      <p className="text-lg sm:text-xxl md:text-xl lg:text-xl xl:text-xl font-bold mt-2">
+        {formatCurrency(amount)}
+      </p>
+      <p className="text-sm mt-2 flex items-center gap-1">
+        <TrendingUp className="w-4 h-4" />
+        {trend}
+      </p>
+    </div>
+    {/* Icon – responsive sizing */}
+    <Icon className="w-10 h-10 sm:w-12 sm:h-8 md:w-10 md:h-14 opacity-60" />
+  </CardContent>
+</Card>
 
+);
 const Row: React.FC<{ label: string; value: number }> = ({ label, value }) => (
   <div className="flex justify-between">
     <span>{label}</span>
     <span className="font-semibold">{formatCurrency(value)}</span>
   </div>
 );
-
 function MoliyaviyDashboard() {
   const { summary, expenseBreakdown, debtors } = dashboardData;
-
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -154,7 +158,6 @@ function MoliyaviyDashboard() {
         <h1 className="text-4xl font-bold text-gray-900">
           Moliyaviy Dashboard
         </h1>
-
         {/* Umumiy kartalar */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <SummaryCard
@@ -164,7 +167,6 @@ function MoliyaviyDashboard() {
             icon={Wallet}
             gradient="from-emerald-500 to-teal-600"
           />
-
           <SummaryCard
             title="Umumiy Xarajat"
             amount={summary.totalExpenses}
@@ -172,7 +174,6 @@ function MoliyaviyDashboard() {
             icon={CreditCard}
             gradient="from-red-500 to-orange-600"
           />
-
           <SummaryCard
             title="Jami Qarzdorlik"
             amount={summary.totalDebt}
@@ -180,7 +181,6 @@ function MoliyaviyDashboard() {
             icon={DollarSign}
             gradient="from-amber-500 to-orange-600"
           />
-
           {/* Oylik ko'rinish */}
           <Card className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-lg">
             <CardHeader>
@@ -199,7 +199,6 @@ function MoliyaviyDashboard() {
             </CardContent>
           </Card>
         </div>
-
         {/* Grafiklar qismi */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* O'sish grafik */}
@@ -213,7 +212,6 @@ function MoliyaviyDashboard() {
               </CardContent>
             </Card>
           </div>
-
           {/* Xarajatlar taqsimoti - Donut chart + legend */}
           <Card className="h-full">
             <CardHeader>
@@ -254,7 +252,6 @@ function MoliyaviyDashboard() {
             </CardContent>
           </Card>
         </div>
-
         {/* Qarzdorlar jadvali */}
         <Card>
           <CardHeader>
