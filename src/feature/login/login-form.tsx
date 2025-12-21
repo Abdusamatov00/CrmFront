@@ -16,10 +16,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/service/api";
 import { useAuth } from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
+import { elements } from "chart.js";
+import Admin from "@/components/layout/admin";
 
 export function LoginForm() {
   const login = useAuth((s) => s.login);
-const navigate= useNavigate();
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -32,15 +35,22 @@ const navigate= useNavigate();
     try {
       const { data } = await api.post("/auth/login", values);
 
-      // 🟢 Call Zustand login()
-      login(
-        data.accessToken,
-        data.refreshToken,
-        data.user
-      );
-      console.log(data);
-      
-      navigate('/adashboard');
+      // 🟢 Zustandga yozish
+      login(data.accessToken, data.refreshToken, data.user);
+
+      console.log("LOGIN RESPONSE:", data);
+
+      // 🟥 ROLE CHECK (if / else)
+      if (data.user.role === "ADMIN") {
+        navigate("/admin", { elements: <Admin /> });
+      } else if (data.user.role === "TEACHER") {
+        navigate("/tdashboard");
+      } else if (data.user.role === "MANAGER") {
+        navigate("/manager-dashboard");
+      } else {
+        navigate("/"); // default
+      }
+
     } catch (err) {
       console.error("Login error:", err);
       form.setError("password", {
@@ -68,7 +78,6 @@ const navigate= useNavigate();
                 </p>
               </div>
 
-              {/* PHONE */}
               <FormField
                 control={form.control}
                 name="phone"
@@ -88,7 +97,6 @@ const navigate= useNavigate();
                 )}
               />
 
-              {/* PASSWORD */}
               <FormField
                 control={form.control}
                 name="password"
