@@ -16,6 +16,7 @@ const App = () => {
           <Route path="home" element={<MoliyaviyDashboard />} />
           <Route path="managers" element={<CreateManager />} />
         </Route>
+        
 
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

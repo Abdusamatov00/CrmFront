@@ -23,7 +23,8 @@ const Admin = () => {
 
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div className="flex-1 overflow-auto pt-[56px] ">
+      {/* Main Content */}
+      <div className="flex-1 overflow-auto ">
         <Outlet />
       </div>
     </div>
