@@ -48,7 +48,7 @@ export default function FinanceGrowthChart() {
   const profit = income.map((v, i) => v - expense[i]);
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm">
+    <div className="bg-white p-6 rounded-2xl shadow-sm w-full">
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-semibold">
@@ -60,12 +60,11 @@ export default function FinanceGrowthChart() {
             <button
               key={p}
               onClick={() => setPeriod(p)}
-              className={`px-3 py-1 text-sm rounded-md transition
-                ${
-                  period === p
-                    ? "bg-white shadow text-blue-600"
-                    : "text-gray-500"
-                }`}
+              className={`px-3 py-1 text-sm rounded-md transition ${
+                period === p
+                  ? "bg-white shadow text-blue-600"
+                  : "text-gray-500"
+              }`}
             >
               {p === "weekly" ? "Hafta" : p === "monthly" ? "Oy" : "Yil"}
             </button>
@@ -74,8 +73,8 @@ export default function FinanceGrowthChart() {
       </div>
 
       {/* CHART */}
-      <div className="flex flex-col w-full h-80 sm:h-96">
-  <Line 
+      <div className="w-full h-[260px] sm:h-[320px] lg:h-[360px]">
+        <Line
           data={{
             labels,
             datasets: [
@@ -133,22 +132,18 @@ export default function FinanceGrowthChart() {
                 padding: 12,
                 callbacks: {
                   label: (ctx) =>
-                    `${ctx.dataset.label}: ${ctx.raw.toLocaleString()} so‘m`,
+                    `${ctx.dataset.label}: ${Number(ctx.raw).toLocaleString()} so‘m`,
                 },
               },
             },
             scales: {
               x: {
-                grid: {
-                  display: false,
-                },
+                grid: { display: false },
               },
               y: {
-                grid: {
-                  color: "#f1f5f9",
-                },
+                grid: { color: "#f1f5f9" },
                 ticks: {
-                  callback: (v) => v.toLocaleString() + " so‘m",
+                  callback: (v) => `${v.toLocaleString()} so‘m`,
                 },
               },
             },

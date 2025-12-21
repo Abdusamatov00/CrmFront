@@ -1,31 +1,25 @@
-import {  Navigate, Outlet, Route, Routes } from "react-router-dom";
-import MoliyaviyDashboard from "./components/finance/finances";
+// App.tsx
+import {  Route, Routes } from "react-router-dom";
 import LoginPage from "./feature/login/login";
-import Sidebar from "./components/shared/sidebar";
+import MoliyaviyDashboard from "./components/finance/finances";
+import Admin from "./components/layout/admin";
+import StudentsList from "./components/futured/students/studentsList";
+import CreateStudent from "./components/futured/students/createStudents";
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <div>
-      <Routes>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
 
-      
-        {/* <Route path="/login" element={<LoginPage />} />
-        <Route path="/*" element={<Navigate to={"/login"} />} /> */}
-        <Route
-          path="/admin"
-          element={
-            <div className="w-full flex">
-              <Sidebar />
-              <Outlet />
-            </div>
-          }
-        >
-          <Route path="home" element="home" />
-                 
-        </Route>
-      </Routes>
-      <MoliyaviyDashboard/>
-    </div>
+      <Route path="/admin" element={<Admin />}>
+        <Route index element={<MoliyaviyDashboard />} />
+        <Route path="home" element={<MoliyaviyDashboard />} />
+        <Route path="students" element={<StudentsList/>}/>
+        <Route path="create" element={<CreateStudent />} />
+      </Route>
+      {/* <Route path="/" element={<Navigate to="/admin/home" replace />} />
+      <Route path="*" element={<Navigate to="/login" replace />} /> */}
+    </Routes>
   );
 };
 
