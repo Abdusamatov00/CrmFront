@@ -1,4 +1,3 @@
-// src/feature/manager/create-managers.tsx
 import React, { useState } from "react";
 import {
   createManager,
@@ -172,7 +171,6 @@ const CreateManagers: React.FC = () => {
 
 export default CreateManagers;
 
-/* 🔹 Kichik reusable input */
 const Input = ({
   label,
   ...props
