@@ -29,14 +29,12 @@ const App: React.FC = () => {
             <Route index element={<CreateManager />} /> {/* ro‘yxat yoki yaratish */}
           </Route>
 
-          <Route path="students">
-            <Route index element={<StudentsList />} />
+        <Route path="students">
+           <Route index element={<StudentsList />} />
+           <Route path="edit/:studentId" element={<EditStudent />} />
+       </Route>
+       </Route>
 
-            <Route path="create" element={<CreateStudent />} />
-
-            <Route path="edit/:studentId" element={<EditStudent />} />
-          </Route>
-        </Route>
 
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
