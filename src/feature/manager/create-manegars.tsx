@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   createManager,
   type CreateManagerDto,
 } from "@/service/managers-service/managers-service";
 
-const CreateManagers: React.FC = () => {
+const CreateManager: React.FC = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<CreateManagerDto>({
     firstName: "",
     lastName: "",
@@ -16,107 +19,91 @@ const CreateManagers: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
+    setFormData((p) => ({
+      ...p,
       [name]:
-        name === "monthlySalary" ? (value ? Number(value) : undefined) : value,
+        name === "monthlySalary"
+          ? value === ""
+            ? undefined
+            : Number(value)
+          : value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setLoading(true);
     setError(null);
-    setSuccess(false);
 
     try {
       await createManager(formData);
-      setSuccess(true);
-
-      setFormData({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        password: "",
-        photoUrl: "",
-        monthlySalary: undefined,
-      });
+      navigate("/admin/managers");
     } catch (err: any) {
-      if (err.response?.status === 409) {
+      if (err.response?.status === 409)
         setError("Bu telefon raqam allaqachon mavjud");
-      } else if (err.response?.status === 401) {
-        setError("Ruxsat yo‘q");
-      } else {
-        setError("Xatolik yuz berdi");
-      }
+      else setError("Xatolik yuz berdi");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "linear-gradient(180deg, #0f172a 0%, #020617 100%)",
-      }}
-    >
-      <div
-        style={{
-          width: "420px",
-          background: "rgba(15, 23, 42, 0.9)",
-          borderRadius: "14px",
-          padding: "28px",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
-        }}
-      >
-        <h2
-          style={{
-            textAlign: "center",
-            color: "#fff",
-            marginBottom: "24px",
-            fontSize: "20px",
-            fontWeight: 600,
-          }}
-        >
-          Yangi Menejer Qo‘shish
-        </h2>
+    <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-6 lg:p-8">
+        {/* HEADER */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-800">
+              👨‍💼 Yangi Menejer Qo‘shish
+            </h2>
+            <p className="text-gray-500 mt-1">
+              Menejer ma’lumotlarini to‘ldiring
+            </p>
+          </div>
 
-        <form onSubmit={handleSubmit} style={{ display: "grid", gap: "14px" }}>
+          <button
+            onClick={() => navigate(-1)}
+            className="px-6 py-3 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold transition"
+          >
+            ← Orqaga
+          </button>
+        </div>
+
+        {/* FORM */}
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           <Input
-            label="First name"
+            label="Ismi"
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
           />
 
           <Input
-            label="Last name"
+            label="Familiyasi"
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
           />
 
           <Input
-            label="Telefon"
+            label="Telefon raqami"
             name="phone"
+            placeholder="+998..."
             value={formData.phone}
             onChange={handleChange}
           />
 
           <Input
-            label="Password"
-            type="password"
+            label="Parol"
             name="password"
+            type="password"
             value={formData.password}
             onChange={handleChange}
           />
@@ -129,66 +116,57 @@ const CreateManagers: React.FC = () => {
           />
 
           <Input
-            label="Oylik maosh (ixtiyoriy)"
-            type="number"
+            label="Oylik maosh (UZS)"
             name="monthlySalary"
+            type="number"
             value={formData.monthlySalary ?? ""}
             onChange={handleChange}
           />
 
           {error && (
-            <p style={{ color: "#f87171", textAlign: "center" }}>{error}</p>
-          )}
-          {success && (
-            <p style={{ color: "#4ade80", textAlign: "center" }}>
-              Menejer muvaffaqiyatli qo‘shildi ✅
-            </p>
+            <div className="md:col-span-2 text-red-600 font-medium">
+              {error}
+            </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              marginTop: "8px",
-              height: "42px",
-              borderRadius: "8px",
-              border: "none",
-              background: loading
-                ? "#334155"
-                : "linear-gradient(90deg, #2563eb, #1d4ed8)",
-              color: "#fff",
-              fontWeight: 600,
-              cursor: loading ? "not-allowed" : "pointer",
-            }}
-          >
-            {loading ? "Yuklanmoqda..." : "Qo‘shish"}
-          </button>
+          {/* ACTIONS */}
+          <div className="md:col-span-2 flex justify-end gap-4 mt-4">
+            <button
+              type="button"
+              onClick={() => navigate("/admin/managers")}
+              className="px-8 py-3 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold transition"
+            >
+              Bekor qilish
+            </button>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-lg disabled:opacity-60"
+            >
+              {loading ? "Saqlanmoqda..." : "Saqlash"}
+            </button>
+          </div>
         </form>
       </div>
     </div>
   );
 };
 
-export default CreateManagers;
+export default CreateManager;
+
+/* ================= INPUT ================= */
 
 const Input = ({
   label,
   ...props
 }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => (
-  <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-    <label style={{ color: "#cbd5f5", fontSize: "13px" }}>{label}</label>
+  <div className="flex flex-col gap-2">
+    <label className="text-gray-700 font-medium">{label}</label>
     <input
       {...props}
       required={props.name !== "photoUrl" && props.name !== "monthlySalary"}
-      style={{
-        height: "38px",
-        borderRadius: "8px",
-        border: "1px solid #334155",
-        background: "#020617",
-        color: "#fff",
-        padding: "0 12px",
-        outline: "none",
-      }}
+      className="h-11 rounded-xl border border-gray-300 px-4 outline-none focus:ring-2 focus:ring-blue-500 transition"
     />
   </div>
 );
