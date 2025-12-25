@@ -231,7 +231,6 @@ const StudentsList = () => {
       </div>
 
       {/* Drawer - Create Student */}
-   // StudentsList.tsx da faqat o'zgartirilgan qismlar (qolgan kod o'zgarmaydi)
 
       {/* Drawer - Yangi talaba qo'shish formasi */}
       {openCreate && (
