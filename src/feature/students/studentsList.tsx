@@ -29,11 +29,14 @@ const StudentsList = () => {
       const params = new URLSearchParams({
         limit: "100",
         ...(search.trim() && { search: search.trim() }),
-        ...(filter !== "all" && !forceAll && {
-          isActive: filter === "active" ? "true" : "false",
-        }),
+        ...(filter !== "all" &&
+          !forceAll && {
+            isActive: filter === "active" ? "true" : "false",
+          }),
       });
-      const res = await api.get<{ items: Student[] }>(`/students?${params.toString()}`);
+      const res = await api.get<{ items: Student[] }>(
+        `/students?${params.toString()}`
+      );
       setStudents(res.data.items || []);
     } catch (err) {
       console.error("Studentlarni yuklashda xato:", err);
@@ -51,7 +54,13 @@ const StudentsList = () => {
   };
 
   const formatDate = (date: string | null) =>
-    date ? new Date(date).toLocaleDateString("uz-UZ", { year: "numeric", month: "long", day: "numeric" }) : "-";
+    date
+      ? new Date(date).toLocaleDateString("uz-UZ", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "-";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-4 sm:p-6 lg:p-8">
@@ -59,8 +68,12 @@ const StudentsList = () => {
         {/* Header */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
           <div>
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-2">📚 Talabalar Boshqaruvi</h1>
-            <p className="text-lg text-gray-600">Talabalarni boshqarish va kuzatish uchun panel</p>
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-2">
+              📚 Talabalar Boshqaruvi
+            </h1>
+            <p className="text-lg text-gray-600">
+              Talabalarni boshqarish va kuzatish uchun panel
+            </p>
           </div>
           <button
             onClick={() => setOpenCreate(true)}
@@ -74,24 +87,42 @@ const StudentsList = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 flex items-center justify-between">
             <div>
-              <p className="text-gray-500 text-sm font-medium">Jami Talabalar</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{students.length}</p>
+              <p className="text-gray-500 text-sm font-medium">
+                Jami Talabalar
+              </p>
+              <p className="text-3xl font-bold text-gray-900 mt-2">
+                {students.length}
+              </p>
             </div>
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">👥</div>
+            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">
+              👥
+            </div>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 flex items-center justify-between">
             <div>
-              <p className="text-gray-500 text-sm font-medium">Faol Talabalar</p>
-              <p className="text-3xl font-bold text-green-600 mt-2">{students.filter((s) => s.isActive).length}</p>
+              <p className="text-gray-500 text-sm font-medium">
+                Faol Talabalar
+              </p>
+              <p className="text-3xl font-bold text-green-600 mt-2">
+                {students.filter((s) => s.isActive).length}
+              </p>
             </div>
-            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">✅</div>
+            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">
+              ✅
+            </div>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 flex items-center justify-between">
             <div>
-              <p className="text-gray-500 text-sm font-medium">Arxiv Talabalar</p>
-              <p className="text-3xl font-bold text-amber-600 mt-2">{students.filter((s) => !s.isActive).length}</p>
+              <p className="text-gray-500 text-sm font-medium">
+                Arxiv Talabalar
+              </p>
+              <p className="text-3xl font-bold text-amber-600 mt-2">
+                {students.filter((s) => !s.isActive).length}
+              </p>
             </div>
-            <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-2xl">📁</div>
+            <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-2xl">
+              📁
+            </div>
           </div>
         </div>
 
@@ -114,11 +145,17 @@ const StudentsList = () => {
                   key={f}
                   onClick={() => setFilter(f)}
                   className={`px-5 py-2 rounded-xl font-medium text-base transition-all duration-200 flex items-center gap-2 ${
-                    filter === f ? "bg-blue-600 text-white shadow-lg" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    filter === f
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
                   <Filter className="w-4 h-4" />
-                  {f === "active" ? "Faol" : f === "archived" ? "Arxiv" : "Barchasi"}
+                  {f === "active"
+                    ? "Faol"
+                    : f === "archived"
+                    ? "Arxiv"
+                    : "Barchasi"}
                 </button>
               ))}
             </div>
@@ -131,23 +168,48 @@ const StudentsList = () => {
             <table className="w-full min-w-[700px]">
               <thead className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
                 <tr>
-                  <th className="py-4 px-6 text-left font-semibold text-lg">Talaba</th>
-                  <th className="py-4 px-6 text-left font-semibold text-lg">Aloqa</th>
-                  <th className="py-4 px-6 text-left font-semibold text-lg">Tug'ilgan sana</th>
-                  <th className="py-4 px-6 text-left font-semibold text-lg">Boshlanish</th>
-                  <th className="py-4 px-6 text-left font-semibold text-lg">Holat</th>
-                  <th className="py-4 px-6 text-left font-semibold text-lg">Amallar</th>
+                  <th className="py-4 px-6 text-left font-semibold text-lg">
+                    Talaba
+                  </th>
+                  <th className="py-4 px-6 text-left font-semibold text-lg">
+                    Aloqa
+                  </th>
+                  <th className="py-4 px-6 text-left font-semibold text-lg">
+                    Tug'ilgan sana
+                  </th>
+                  <th className="py-4 px-6 text-left font-semibold text-lg">
+                    Boshlanish
+                  </th>
+                  <th className="py-4 px-6 text-left font-semibold text-lg">
+                    Holat
+                  </th>
+                  <th className="py-4 px-6 text-left font-semibold text-lg">
+                    Amallar
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {students.map((student) => (
-                  <tr key={student.id} className="border-b border-gray-100 hover:bg-blue-50/50">
+                  <tr
+                    key={student.id}
+                    className="border-b border-gray-100 hover:bg-blue-50/50"
+                  >
                     <td className="py-4 px-6">{student.fullName}</td>
                     <td className="py-4 px-6">{student.phone}</td>
-                    <td className="py-4 px-6">{formatDate(student.dateOfBirth)}</td>
-                    <td className="py-4 px-6">{formatDate(student.startDate)}</td>
                     <td className="py-4 px-6">
-                      <span className={`px-2 py-1 rounded-xl text-sm ${student.isActive ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800"}`}>
+                      {formatDate(student.dateOfBirth)}
+                    </td>
+                    <td className="py-4 px-6">
+                      {formatDate(student.startDate)}
+                    </td>
+                    <td className="py-4 px-6">
+                      <span
+                        className={`px-2 py-1 rounded-xl text-sm ${
+                          student.isActive
+                            ? "bg-green-100 text-green-800"
+                            : "bg-amber-100 text-amber-800"
+                        }`}
+                      >
                         {student.isActive ? "Faol" : "Arxiv"}
                       </span>
                     </td>
@@ -184,17 +246,41 @@ const StudentsList = () => {
         {!loading && students.length > 0 && (
           <div className="md:hidden flex flex-col gap-4">
             {students.map((student) => (
-              <div key={student.id} className="bg-white rounded-2xl shadow p-4 flex flex-col gap-3">
+              <div
+                key={student.id}
+                className="bg-white rounded-2xl shadow p-4 flex flex-col gap-3"
+              >
                 <div className="flex justify-between items-start">
                   <h3 className="font-semibold text-lg">{student.fullName}</h3>
-                  <span className={`px-3 py-1 rounded-xl text-sm font-medium ${student.isActive ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800"}`}>
+                  <span
+                    className={`px-3 py-1 rounded-xl text-sm font-medium ${
+                      student.isActive
+                        ? "bg-green-100 text-green-800"
+                        : "bg-amber-100 text-amber-800"
+                    }`}
+                  >
                     {student.isActive ? "Faol" : "Arxiv"}
                   </span>
                 </div>
                 <div className="space-y-2 text-sm text-gray-600">
-                  <p>Aloqa: <span className="font-medium text-gray-900">{student.phone}</span></p>
-                  <p>Tug'ilgan sana: <span className="font-medium text-gray-900">{formatDate(student.dateOfBirth)}</span></p>
-                  <p>Boshlanish: <span className="font-medium text-gray-900">{formatDate(student.startDate)}</span></p>
+                  <p>
+                    Aloqa:{" "}
+                    <span className="font-medium text-gray-900">
+                      {student.phone}
+                    </span>
+                  </p>
+                  <p>
+                    Tug'ilgan sana:{" "}
+                    <span className="font-medium text-gray-900">
+                      {formatDate(student.dateOfBirth)}
+                    </span>
+                  </p>
+                  <p>
+                    Boshlanish:{" "}
+                    <span className="font-medium text-gray-900">
+                      {formatDate(student.startDate)}
+                    </span>
+                  </p>
                 </div>
                 <div className="flex gap-3 mt-3">
                   <Link
@@ -230,15 +316,13 @@ const StudentsList = () => {
         )}
       </div>
 
-      {/* Drawer - Create Student */}
-
       {/* Drawer - Yangi talaba qo'shish formasi */}
       {openCreate && (
         <div className="fixed inset-0 z-[9999] flex">
           {/* Overlay - tashqariga bosganda yopiladi */}
-          <div 
-            className="absolute inset-0 bg-black/70 backdrop-blur-md" 
-            onClick={() => setOpenCreate(false)} 
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            onClick={() => setOpenCreate(false)}
           />
 
           {/* Drawer panel - endi oq emas, zamonaviy gradient va ko'proq "nafas oladigan" */}

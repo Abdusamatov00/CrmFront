@@ -6,36 +6,43 @@ import MoliyaviyDashboard from "./components/finance/finances";
 import Admin from "./components/layout/admin";
 import { Toaster } from "./components/ui/sonner";
 
-
-
-// Manager komponentlari (agar kerak bo'lsa)
+// Managers
 import CreateManager from "./feature/manager/create-manegars";
+
+// Students
 import StudentsList from "./feature/students/studentsList";
-import CreateStudent from "./feature/students/createStudents";
 import EditStudent from "./feature/students/editStudents";
+import ManagersList from "./feature/manager/managerList";
 
 const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Routes>
+        {/* LOGIN */}
         <Route path="/login" element={<LoginPage />} />
 
+        {/* ADMIN LAYOUT */}
         <Route path="/admin" element={<Admin />}>
+          {/* DASHBOARD */}
           <Route index element={<MoliyaviyDashboard />} />
-
           <Route path="home" element={<MoliyaviyDashboard />} />
 
+          {/* MANAGERS */}
           <Route path="managers">
-            <Route index element={<CreateManager />} /> {/* ro‘yxat yoki yaratish */}
+            <Route index element={<ManagersList />} />
+            <Route path="create" element={<CreateManager />} />
+            {/* keyin qo‘shasan */}
+            {/* <Route path="edit/:id" element={<EditManager />} /> */}
           </Route>
 
-        <Route path="students">
-           <Route index element={<StudentsList />} />
-           <Route path="edit/:studentId" element={<EditStudent />} />
-       </Route>
-       </Route>
+          {/* STUDENTS */}
+          <Route path="students">
+            <Route index element={<StudentsList />} />
+            <Route path="edit/:studentId" element={<EditStudent />} />
+          </Route>
+        </Route>
 
-
+        {/* DEFAULT */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
 
