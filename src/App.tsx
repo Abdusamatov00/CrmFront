@@ -14,6 +14,7 @@ import StudentsList from "./feature/students/studentsList";
 import EditStudent from "./feature/students/editStudents";
 import GroupList from "./feature/group/group-list";
 import GroupHistory from "./feature/group/group-history";
+import TeacherList from "./feature/teachers/teacher-list";
 
 const App: React.FC = () => {
   return (
@@ -40,6 +41,10 @@ const App: React.FC = () => {
           <Route path="students">
             <Route index element={<StudentsList />} />
             <Route path="edit/:studentId" element={<EditStudent />} />
+          </Route>
+          < Route path="teachers">
+            <Route index element={<Navigate to="/admin/teachers/list" replace />} />
+            <Route path="list" element={<TeacherList />} />
           </Route>
         </Route>
 
