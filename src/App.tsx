@@ -6,13 +6,14 @@ import MoliyaviyDashboard from "./components/finance/finances";
 import Admin from "./components/layout/admin";
 import { Toaster } from "./components/ui/sonner";
 
-// Managers
+// Manager komponentlari (agar kerak bo'lsa)
 import CreateManager from "./feature/manager/create-manegars";
 
 // Students
 import StudentsList from "./feature/students/studentsList";
 import EditStudent from "./feature/students/editStudents";
-import ManagersList from "./feature/manager/managerList";
+import GroupList from "./feature/group/group-list";
+import GroupHistory from "./feature/group/group-history";
 
 const App: React.FC = () => {
   return (
@@ -29,13 +30,13 @@ const App: React.FC = () => {
 
           {/* MANAGERS */}
           <Route path="managers">
-            <Route index element={<ManagersList />} />
-            <Route path="create" element={<CreateManager />} />
-            {/* keyin qo‘shasan */}
-            {/* <Route path="edit/:id" element={<EditManager />} /> */}
+            <Route index element={<CreateManager />} />{" "}
+            {/* ro‘yxat yoki yaratish */}
           </Route>
-
-          {/* STUDENTS */}
+          <Route>
+            <Route path="groups" element={<GroupList />} />
+            <Route path="arxiv" element={<GroupHistory />} />
+          </Route>
           <Route path="students">
             <Route index element={<StudentsList />} />
             <Route path="edit/:studentId" element={<EditStudent />} />
