@@ -13,6 +13,7 @@ import CreateStudent from "./feature/students/createStudents";
 import EditStudent from "./feature/students/editStudents";
 import GroupList from "./feature/group/group-list";
 import GroupHistory from "./feature/group/group-history";
+import RoomsList from "./feature/rooms/Rooms-list";
 
 const App: React.FC = () => {
   return (
@@ -32,6 +33,9 @@ const App: React.FC = () => {
           <Route>
             <Route path="groups" element={<GroupList />} />
             <Route path="arxiv" element={<GroupHistory />} />
+          </Route>
+          <Route>
+            <Route path="rooms" element={<RoomsList />} />
           </Route>
           <Route path="students">
             <Route index element={<StudentsList />} />
