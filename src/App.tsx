@@ -6,15 +6,22 @@ import MoliyaviyDashboard from "./components/finance/finances";
 import Admin from "./components/layout/admin";
 import { Toaster } from "./components/ui/sonner";
 
-// Manager komponentlari (agar kerak bo'lsa)
+// Manager
 import CreateManager from "./feature/manager/create-manegars";
 
 // Students
 import StudentsList from "./feature/students/studentsList";
 import EditStudent from "./feature/students/editStudents";
+
+// Groups
 import GroupList from "./feature/group/group-list";
 import GroupHistory from "./feature/group/group-history";
+
+// Teachers
 import TeacherList from "./feature/teachers/teacher-list";
+
+// Enrollments (YANGI)
+import EnrollmentsPage from "./feature/enrollments/EnrollmentsPage";
 
 const App: React.FC = () => {
   return (
@@ -25,26 +32,37 @@ const App: React.FC = () => {
 
         {/* ADMIN LAYOUT */}
         <Route path="/admin" element={<Admin />}>
-          {/* DASHBOARD */}
+          {/* Dashboard */}
           <Route index element={<MoliyaviyDashboard />} />
           <Route path="home" element={<MoliyaviyDashboard />} />
 
-          {/* MANAGERS */}
+          {/* Managers */}
           <Route path="managers">
-            <Route index element={<CreateManager />} />{" "}
-            {/* ro‘yxat yoki yaratish */}
+            <Route index element={<CreateManager />} />
           </Route>
+
+          {/* Groups */}
           <Route>
             <Route path="groups" element={<GroupList />} />
             <Route path="arxiv" element={<GroupHistory />} />
           </Route>
+
+          {/* Students */}
           <Route path="students">
             <Route index element={<StudentsList />} />
             <Route path="edit/:studentId" element={<EditStudent />} />
           </Route>
-          < Route path="teachers">
+
+          {/* Teachers */}
+          <Route path="teachers">
             <Route index element={<Navigate to="/admin/teachers/list" replace />} />
             <Route path="list" element={<TeacherList />} />
+          </Route>
+
+          {/* 🔥 YANGI: ENROLLMENTS */}
+          <Route path="enrollments">
+            <Route index element={<EnrollmentsPage to="/admin/enrollments" />} />
+            <Route path="list" element={<EnrollmentsPage />} />
           </Route>
         </Route>
 
