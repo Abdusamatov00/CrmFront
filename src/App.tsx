@@ -15,6 +15,7 @@ import EditStudent from "./feature/students/editStudents";
 import GroupList from "./feature/group/group-list";
 import GroupHistory from "./feature/group/group-history";
 import TeacherList from "./feature/teachers/teacher-list";
+import ManagersList from "./feature/manager/managerList";
 
 const App: React.FC = () => {
   return (
@@ -31,8 +32,8 @@ const App: React.FC = () => {
 
           {/* MANAGERS */}
           <Route path="managers">
-            <Route index element={<CreateManager />} />{" "}
-            {/* ro‘yxat yoki yaratish */}
+            <Route index element={<ManagersList />} />{" "}
+            <Route path="createManagers" element={<CreateManager />} />
           </Route>
           <Route>
             <Route path="groups" element={<GroupList />} />
@@ -42,8 +43,11 @@ const App: React.FC = () => {
             <Route index element={<StudentsList />} />
             <Route path="edit/:studentId" element={<EditStudent />} />
           </Route>
-          < Route path="teachers">
-            <Route index element={<Navigate to="/admin/teachers/list" replace />} />
+          <Route path="teachers">
+            <Route
+              index
+              element={<Navigate to="/admin/teachers/list" replace />}
+            />
             <Route path="list" element={<TeacherList />} />
           </Route>
         </Route>

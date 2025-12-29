@@ -44,7 +44,7 @@ const ManagersList: React.FC = () => {
         </div>
 
         <Link
-          to="/admin/managers/create"
+          to="/admin/managers/createManagers"
           className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
         >
           + Yangi Menejer Qo‘shish
