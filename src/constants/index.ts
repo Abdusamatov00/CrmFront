@@ -16,4 +16,5 @@ export const AdminNavLinks = [
   { title: "DebtorsList", route: "/admin/debtors", icon: DollarSign },
   { title: "Finance", route: "/admin/finance", icon: Landmark },
   { title: "Settings", route: "/admin/managers", icon: Settings },
+  { title: "Settings", route: "/admin/rooms", icon: Settings },
 ];

@@ -42,15 +42,12 @@ export default function GroupCard({ group }: GroupCardProps) {
 
   return (
     <>
-      {/* CARD */}
       <div className="bg-background rounded-xl border border-foreground/10 shadow-sm hover:shadow-md transition">
-        {/* HEADER */}
         <div className="px-5 py-4 flex items-start justify-between border-b border-foreground/10">
           <h3 className="text-base font-semibold text-foreground">
             {group.name}
           </h3>
 
-          {/* STATUS CHIP */}
           <span
             className={`px-3 py-1 rounded-full text-xs font-medium border
               ${
@@ -63,7 +60,6 @@ export default function GroupCard({ group }: GroupCardProps) {
           </span>
         </div>
 
-        {/* CONTENT */}
         <div className="px-5 py-4 space-y-3 text-sm text-foreground/70">
           <InfoRow icon={<Users size={16} />} label="Sig‘imi">
             {group.capacity} o‘rin
@@ -118,7 +114,6 @@ export default function GroupCard({ group }: GroupCardProps) {
         </div>
       </div>
 
-      {/* DELETE DIALOG */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
@@ -138,7 +133,6 @@ export default function GroupCard({ group }: GroupCardProps) {
         </DialogContent>
       </Dialog>
 
-      {/* RESTORE DIALOG */}
       <Dialog open={isOpenBack} onOpenChange={setIsOpenBack}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
@@ -172,7 +166,6 @@ export default function GroupCard({ group }: GroupCardProps) {
   );
 }
 
-/* 🔹 Kichik helper component (MUI ListItem style) */
 function InfoRow({
   icon,
   label,

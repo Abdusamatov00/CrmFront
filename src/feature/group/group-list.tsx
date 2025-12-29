@@ -23,7 +23,6 @@ export default function GroupList() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-foreground/0 to-foreground/10 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-foreground/90">
@@ -55,7 +54,6 @@ export default function GroupList() {
           </div>
         </div>
 
-        {/* Search */}
         <div className="bg-background rounded-lg shadow-sm p-6 mb-6">
           <div className="relative">
             <Search
@@ -72,7 +70,6 @@ export default function GroupList() {
           </div>
         </div>
 
-        {/* Content */}
         {loading ? (
           <div className="text-center py-12">Yuklanmoqda...</div>
         ) : displayedGroups.length === 0 ? (
@@ -89,7 +86,6 @@ export default function GroupList() {
               ))}
             </div>
 
-            {/* Pagination */}
             {pages > 1 && (
               <div className="flex justify-center gap-2">
                 {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (
@@ -111,7 +107,6 @@ export default function GroupList() {
         )}
       </div>
 
-      {/* Forms */}
       {isFormOpen && !showHistory && (
         <GroupForm open={isFormOpen} onOpenChange={setIsFormOpen} />
       )}

@@ -24,10 +24,24 @@ const ManagersList: React.FC = () => {
     fetchManagers();
   }, []);
 
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
   const remove = async (id: string) => {
-    if (!confirm("Menejerni arxivga o‘tkazmoqchimisiz?")) return;
-    await deleteManager(id);
-    fetchManagers();
+    const ok = confirm("Menejerni o‘chirmoqchimisiz?");
+    if (!ok) return;
+
+    setDeletingId(id);
+    setError(null);
+
+    try {
+      await deleteManager(id);
+      setManagers((prev) => prev.filter((m) => m.id !== id));
+    } catch {
+      setError("Menejerni o‘chirishda xatolik yuz berdi");
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   return (
@@ -44,7 +58,7 @@ const ManagersList: React.FC = () => {
         </div>
 
         <Link
-          to="/admin/managers/createManagers"
+          to="/admin/managers/create"
           className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
         >
           + Yangi Menejer Qo‘shish
@@ -71,6 +85,11 @@ const ManagersList: React.FC = () => {
           <FilterBtn>Barchasi</FilterBtn>
         </div>
       </div>
+      {error && (
+        <div className="mb-4 text-red-600 font-medium bg-red-50 p-3 rounded-lg">
+          {error}
+        </div>
+      )}
 
       {/* TABLE */}
       <div className="bg-white rounded-2xl shadow overflow-hidden">
@@ -111,9 +130,10 @@ const ManagersList: React.FC = () => {
                       </Link>
                       <button
                         onClick={() => remove(m.id)}
-                        className="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+                        disabled={deletingId === m.id}
+                        className="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
                       >
-                        <Archive size={18} />
+                        {deletingId === m.id ? "..." : <Archive size={18} />}
                       </button>
                     </div>
                   </td>
