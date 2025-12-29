@@ -1,4 +1,3 @@
-// src/App.tsx
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./feature/login/login";
@@ -6,7 +5,6 @@ import MoliyaviyDashboard from "./components/finance/finances";
 import Admin from "./components/layout/admin";
 import { Toaster } from "./components/ui/sonner";
 
-// Manager komponentlari (agar kerak bo'lsa)
 import CreateManager from "./feature/manager/create-manegars";
 import StudentsList from "./feature/students/studentsList";
 import CreateStudent from "./feature/students/createStudents";
@@ -28,7 +26,6 @@ const App: React.FC = () => {
 
           <Route path="managers">
             <Route index element={<CreateManager />} />{" "}
-            {/* ro‘yxat yoki yaratish */}
           </Route>
           <Route>
             <Route path="groups" element={<GroupList />} />

@@ -15,10 +15,8 @@ export default function RoomsList() {
 
   return (
     <div className="space-y-6">
-      {/* AddRoom Form */}
       <AddRoom />
 
-      {/* Rooms List */}
       {loading ? (
         <div className="flex justify-center py-10">
           <Loader2 className="animate-spin w-8 h-8" />
@@ -27,7 +25,7 @@ export default function RoomsList() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {rooms.map((room) => (
             <div
-              key={room.id} // UNIQUE key, React key xatosi yo‘q
+              key={room.id}
               className="bg-white/70 dark:bg-slate-900 p-5 rounded-2xl shadow-lg"
             >
               <h3 className="font-bold text-lg">{room.name}</h3>

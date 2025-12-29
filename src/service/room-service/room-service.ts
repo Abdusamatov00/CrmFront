@@ -17,7 +17,7 @@ export const RoomService = {
       } else {
         console.error("Get all rooms failed:", error.message);
       }
-      return []; // fallback
+      return [];
     }
   },
 

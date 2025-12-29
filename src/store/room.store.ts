@@ -31,16 +31,13 @@ export const useRoomStore = create<RoomStore>((set) => ({
   addRoom: async (data) => {
     set({ loading: true });
     try {
-      // backendga saqlanadi
       const res = await RoomService.create(data);
 
-      // AGAR backend yangi roomni qaytarsa (ENG TO‘G‘RI USUL)
       if (res?.data) {
         set((state) => ({
           rooms: [...state.rooms, res.data],
         }));
       } else {
-        // aks holda qayta fetch
         const rooms = await RoomService.getAll();
         set({ rooms });
       }

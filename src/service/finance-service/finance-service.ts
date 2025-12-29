@@ -1,5 +1,3 @@
-// src/service/finance-service.ts
-
 import { api } from "../api";
 
 export interface FinanceOverview {
@@ -34,7 +32,7 @@ export const financeService = {
     const from = new Date(now.getFullYear(), now.getMonth() - 5, 1); // oxirgi 6 oy
     const to = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-    return api.get<FinanceOverview>('/finance/overview', {
+    return api.get<FinanceOverview>("/finance/overview", {
       params: {
         from: from.toISOString(),
         to: to.toISOString(),
@@ -44,11 +42,11 @@ export const financeService = {
 
   // Umumiy balans (kartalar uchun)
   getGlobalBalance: () => {
-    return api.get<GlobalBalance>('/finance/balance');
+    return api.get<GlobalBalance>("/finance/balance");
   },
 
   // Qarzdorlar
   getDebtors: (minDebt = 0) => {
-    return api.get<Debtor[]>('/finance/debtors', { params: { minDebt } });
+    return api.get<Debtor[]>("/finance/debtors", { params: { minDebt } });
   },
 };

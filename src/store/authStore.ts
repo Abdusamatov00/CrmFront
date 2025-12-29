@@ -35,7 +35,6 @@ export interface Enrollment {
   };
 }
 
-// ApiError interfeysini qo'shamiz
 export interface ApiError {
   response?: {
     data?: {
@@ -97,26 +96,20 @@ export const useAuth = create<AuthState>()(
         } catch (err: unknown) {
           let errorMessage = "Parolni almashtirishda xatolik";
 
-          // Type-safe error handling
           if (err && typeof err === "object") {
             const error = err as ApiError;
 
-            // 1. API dan kelgan xabar
             if (error.response?.data?.message) {
               errorMessage = error.response.data.message;
-            }
-            // 2. Array formatdagi xatolar
-            else if (Array.isArray(error.response?.data)) {
+            } else if (Array.isArray(error.response?.data)) {
               errorMessage = error.response.data.join(", ");
-            }
-            // 3. Standart error message
-            else if (error.message && typeof error.message === "string") {
+            } else if (error.message && typeof error.message === "string") {
               errorMessage = error.message;
             }
           }
 
           set({ changeError: errorMessage });
-          throw err; // Original error'ni throw qilish
+          throw err;
         } finally {
           set({ changing: false });
         }
